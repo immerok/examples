@@ -1,0 +1,29 @@
+apiVersion: core/v1alpha1
+kind: Job
+metadata:
+  name: window-aggregation-0.2
+  project: demo
+spec:
+  artifactRef:
+    jarOptions: {}
+    name: window-aggregation-0.2
+  initialStateRef:
+    name: window-aggregation-0.1-final
+  flinkVersion: "1.16"
+  resources:
+    rpus: 2
+zone: shared-aws-us-east-1
+---
+apiVersion: core/v1alpha1
+kind: Savepoint
+metadata:
+  name: window-aggregation-0.1-final
+  project: demo
+spec:
+  type: Final
+  finalOptions:
+    shutdownMethod: Graceful
+  jobRef:
+    name: window-aggregation-0.1
+zone: shared-aws-us-east-1
+
